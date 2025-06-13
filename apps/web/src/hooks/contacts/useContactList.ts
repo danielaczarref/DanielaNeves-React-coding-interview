@@ -27,10 +27,11 @@ export function useContactList(pageSize = 20): ContactListResult {
 
       const resp = await contactsClient.list(nextPage, pageSize);
       const newContacts = [...state.contacts.data, ...resp.data];
+      const validScroll = newContacts.length >= resp.totalCount;
 
       setState({
         fetching: false,
-        hasMore: resp.totalCount > 0,
+        hasMore: !validScroll,
         contacts: { data: newContacts, totalCount: resp.totalCount },
         currentPage: nextPage,
       });
