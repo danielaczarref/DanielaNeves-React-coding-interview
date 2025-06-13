@@ -1,6 +1,6 @@
-import { Box, Typography, Avatar } from '@mui/material';
+import { Box, Typography, Avatar, Input } from '@mui/material';
 import { SystemStyleObject, Theme } from '@mui/system';
-
+import { useState } from 'react';
 import { Card } from '@components/atoms';
 import { IContact } from 'react-coding-interview-shared/models';
 
@@ -13,18 +13,21 @@ export const ContactCard: React.FC<IContactCardProps> = ({
   person: { name, email },
   sx,
 }) => {
+  const [isClickedName, setIsClickedName] = useState(false);
+  const [isClickedEmail, setIsClickedEmail] = useState(false);
+
   return (
     <Card sx={sx}>
       <Box display="flex" flexDirection="column" alignItems="center">
         <Avatar />
-        <Box textAlign="center" mt={2}>
-          <Typography variant="subtitle1" lineHeight="1rem">
-            {name}
+        <Typography onClick={() => setIsClickedName(!isClickedName)} textAlign="center" mt={2}>
+          {isClickedName ? (
+            <Input />) : (<Typography>{name}</Typography>)
+          }
+          <Typography onClick={() => setIsClickedEmail(!isClickedEmail)} variant="caption" color="text.secondary">
+            {isClickedEmail ? (<Input />) : (<Typography>{email}</Typography> )}
           </Typography>
-          <Typography variant="caption" color="text.secondary">
-            {email}
-          </Typography>
-        </Box>
+        </Typography>
       </Box>
     </Card>
   );
